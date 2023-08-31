@@ -1,0 +1,30 @@
+{
+  "name": "docker-compose-webhook",
+  "version": "1.0.0",
+  "description": "Webhook driven updates and restarts for docker-compose setups.",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -m es2022 -p tsconfig.json",
+    "dev": "nodemon",
+    "start": "node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "author": "matthias.baldi@lambda-it.ch",
+  "license": "MIT",
+  "dependencies": {
+    "close-with-grace": "^1.2.0",
+    "docker-compose": "^0.24.1",
+    "dotenv": "^16.3.1",
+    "fastify": "^4.20.0",
+    "fastify-openapi-docs": "^2.2.1",
+    "yaml": "^2.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.4",
+    "nodemon": "^3.0.1",
+    "rimraf": "^5.0.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
+  }
+}

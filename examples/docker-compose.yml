@@ -1,0 +1,20 @@
+# example call:
+# curl -X POST --header "X-API-KEY: xyz" \
+#   http://127.0.0.1:8080/compose/update?path=%2Fopt%2Fdata%2Fdocker-compose-webhook%2Fexamples&file=docker-compose.yml&service=service1&image=busybox
+#
+# For a full API documentation, start the server and open http://localhost:8080/docs
+
+version: "3.3"
+services:
+  service1:
+    image: busybox
+    networks:
+      default: null
+  service2:
+    image: nginx:alpine
+    networks:
+      default: null
+networks:
+  default:
+    name: examples_default
+volumes: {}

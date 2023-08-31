@@ -1,0 +1,16 @@
+version: '3.3'
+services:
+  compose-webhook:
+    image: registry.lambda-it.ch/library/docker-compose-webhook:latest
+    container_name: compose-webhook
+    ports:
+      - 9000:8080
+    environment:
+      - API_KEY=${API_KEY} # required for auth
+      - URL=http://${IP}:9000 # optional
+      # ENABLED_BACKUPS=true
+      # ENABLED_GET_CONFIG=false
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /opt/docker:/opt/docker
+    restart: unless-stopped
