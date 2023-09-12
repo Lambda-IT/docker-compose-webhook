@@ -4,7 +4,7 @@ WORKDIR /usr/share/app
 COPY package*.json ./
 
 RUN apk add docker docker-compose \
-    && npm ci --omit=dev
+    && npm ci --omit=dev --no-optional
 
 # ----------------------------
 FROM base as builder
