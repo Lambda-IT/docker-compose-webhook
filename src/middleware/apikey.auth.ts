@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { getConfig } from "../shared/helper/verify-configuration";
+import { getConfig } from "../shared/helper/verify-configuration.js";
 
 export async function verifyApiKey(
   request: FastifyRequest,

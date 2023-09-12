@@ -1,4 +1,4 @@
-import { getConfig } from "./helper/verify-configuration";
+import { getConfig } from "./helper/verify-configuration.js";
 
 const config = getConfig();
 
