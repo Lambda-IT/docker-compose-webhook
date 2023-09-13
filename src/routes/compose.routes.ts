@@ -1,19 +1,19 @@
-import * as compose from "docker-compose/dist/v2.js";
-import { buildDockerComposeOptions } from "../shared/helper/build-docker-compose-opts.js";
+import * as compose from 'docker-compose/dist/v2.js';
+import { buildDockerComposeOptions } from '../shared/helper/build-docker-compose-opts.js';
 import {
   ComposeOperations,
   ComposeRequest,
   ComposeRequestUpdate,
-} from "../shared/types.js";
+} from '../shared/types.js';
 import {
   updateComposeFile,
   pullServiceImage,
-} from "../shared/helper/docker-compose.js";
+} from '../shared/helper/docker-compose.js';
 import {
   apiErrorHandler,
   composeErrorHandler,
-} from "../shared/helper/error-handler.js";
-import { getConfig } from "../shared/helper/verify-configuration.js";
+} from '../shared/helper/error-handler.js';
+import { getConfig } from '../shared/helper/verify-configuration.js';
 
 export const getDockerComposeServices = async (
   request: ComposeRequest,
@@ -40,8 +40,8 @@ export const getDockerComposeConfig = async (
     reply.code(403);
     return {
       status: 403,
-      code: "GETCONFIG_DISABLED",
-      message: "ENABLED_GET_CONFIG is disabled",
+      code: 'GETCONFIG_DISABLED',
+      message: 'ENABLED_GET_CONFIG is disabled',
     };
   }
 };
@@ -60,7 +60,7 @@ export const updateDockerCompose = async (
     apiErrorHandler(
       reply,
       err,
-      ". Check if you have set a valid service name or credentials."
+      '. Check if you have set a valid service name or credentials.'
     );
   } finally {
     const result = await compose.config(options);
@@ -77,14 +77,14 @@ export const composeUp = async (request: ComposeRequest, reply) => {
     await compose.pullAll(options);
     result = await compose.upAll(options);
   } catch (err) {
-    apiErrorHandler(reply, err);
+    apiErrorHandler(reply, err, 'Pull Failed');
   } finally {
     composeErrorHandler(reply, result, ComposeOperations.UP);
     const restartedItems = (result.out || result.err)
-      .split("\n")
-      .map((i) => i.replace("  ", " ").trim())
+      .split('\n')
+      .map((i) => i.replace('  ', ' ').trim())
       .filter((i) => i);
-    return { status: "ok", statusText: restartedItems };
+    return { status: 'ok', statusText: restartedItems };
   }
 };
 
