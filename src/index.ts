@@ -20,13 +20,43 @@ import {
 import logger from "./shared/helper/logger.js";
 import { checkIfFileExists } from "./middleware/checkfiles.js";
 import { apiDocsDescription } from "./shared/api-docs.js";
+import path from "path";
+import { fileURLToPath } from "url";
+import { readFile } from "fs/promises";
 
 verifyConfiguration();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const server = fastify();
 await server.register(fastifyOpenapiDocs, apiDocsDescription);
+await server.register(import("@fastify/static"), {
+  root: path.join(__dirname, "public"),
+  wildcard: true,
+});
 
-server.get("/ping", async (request, reply) => {
+server.get("/docs", async (req, reply) => {
+  const b = await readFile(path.join(__dirname, "public", "docs.html"));
+  reply.header("Content-Type", "text/html").send(b.toString());
+});
+
+server.get("/", async (req, reply) => {
+  const { host, port, enableBackups, enableGetconfig, url, apiKey } =
+    getConfig();
+  return {
+    message: "docker-compose-webhook",
+    host,
+    port,
+    enabledBackups: enableBackups,
+    enabledConfigEndpoint: enableGetconfig,
+    enabledSecurity: apiKey ? true : false,
+    url,
+    docs: `${url}/docs`,
+    openapi: `${url}/openapi/openapi.json`,
+  };
+});
+
+server.get("/ping", async (req, reply) => {
   return "pong\n";
 });
 
@@ -35,6 +65,7 @@ server.get(
   { schema: composeSchema, preHandler: [verifyApiKey, checkIfFileExists] },
   getDockerComposeServices
 );
+
 server.get(
   "/compose/config",
   { schema: composeSchema, preHandler: [verifyApiKey, checkIfFileExists] },

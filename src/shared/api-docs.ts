@@ -3,6 +3,8 @@ import { getConfig } from "./helper/verify-configuration.js";
 const config = getConfig();
 
 export const apiDocsDescription = {
+  skipUI: true,
+  prefix: "/openapi",
   openapi: {
     openapi: "3.0.3",
     info: {
@@ -11,7 +13,7 @@ export const apiDocsDescription = {
         "Webservice to update and restart Docker Compose files and services.",
       contact: {
         name: "Lambda IT",
-        url: "https://lambda-it.ch",
+        url: "https://github.com/Lambda-IT/docker-compose-webhook",
       },
       license: {
         name: "MIT",
@@ -22,7 +24,9 @@ export const apiDocsDescription = {
     servers: [
       {
         url: config.host || `http://localhost:${config.port}`,
-        description: "Configured URL",
+        description: `Configured URL: ${
+          config.host || "http://localhost:" + config.port
+        }`,
       },
     ],
     // tags: [{ name: "service", description: "Service" }],
