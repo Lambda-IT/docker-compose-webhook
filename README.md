@@ -47,6 +47,7 @@ docker run --rm \
     registry.lambda-it.ch/library/docker-compose-webhook:latest
 ```
 
+> [!WARNING]
 > **Security**
 >
 > Note: This container requires to set an API Key to protect the API from unauthorized access and manipulation.
