@@ -4,7 +4,7 @@
   "description": "Webhook driven updates and restarts for docker-compose setups.",
   "main": "index.js",
   "scripts": {
-    "build": "tsc -m es2022 -p tsconfig.json",
+    "build": "tsc -m es2022 -p tsconfig.json && cp -r ./src/public ./dist",
     "dev": "nodemon",
     "start": "node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
