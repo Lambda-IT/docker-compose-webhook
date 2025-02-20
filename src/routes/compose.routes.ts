@@ -75,6 +75,7 @@ export const composeUp = async (request: ComposeRequest, reply) => {
 
   try {
     await compose.pullAll(options);
+    // Builds, (re)creates, starts, and attaches to containers for all services
     result = await compose.upAll(options);
   } catch (err) {
     apiErrorHandler(reply, err, 'Pull Failed');
